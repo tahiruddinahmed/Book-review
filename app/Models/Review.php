@@ -9,6 +9,9 @@ class Review extends Model
 {
     use HasFactory;
 
+
+    protected $fillable = ['review', 'rating'];
+
     /**
      * Get the book that this review belongs to.
      *
