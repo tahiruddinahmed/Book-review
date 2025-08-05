@@ -1,6 +1,6 @@
 @extends('Components.layout')
 
-@section('title', 'Home page');
+@section('title', 'Home page')
 
 
 @section('content')
