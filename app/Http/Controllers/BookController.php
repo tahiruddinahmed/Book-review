@@ -29,16 +29,17 @@ class BookController extends Controller
             default => $books->latest()->withAvgRating()->withReviewsCount()
         };
         
+        $books = $books->paginate(10);
         // $books = $books->get();
         
-        $cacheKey = 'books:' . $filter . ':' . $title;
-        $books = 
-        cache()->remember(
-            $cacheKey,
-            3600,
-            fn() => 
-                $books->get()
-        );
+        // $cacheKey = 'books:' . $filter . ':' . $title;
+        // $books = 
+        // cache()->remember(
+        //     $cacheKey,
+        //     3600,
+        //     fn() => 
+                // $books
+        // );
 
         return view('books.index', ['books' => $books]);
 
@@ -66,17 +67,30 @@ class BookController extends Controller
     public function show(int $id)
     {
 
-        $cacheKey = 'book:' . $id;
+        $cacheBookKey = 'book:' . $id;
 
-        $book = cache()->remember(
-            $cacheKey,
-            3600,
-            fn() => Book::with([
-                'reviews' => fn($query) => $query->latest()
-            ])->withAvgRating()->withReviewsCount()->findOrFail($id)
-        );
+        // $book = 
+        // cache()->remember(
+        //     $cacheBookKey,
+        //     3600,
+        //     fn() => Book::findOrFail($id)->withAvgRating()->withReviewsCount()
+        // );
 
-        return view('books.show', ['book' => $book]);
+        // $reviews = 
+        // cache()->remember(
+        //     $cacheReviewsKey,
+        //     3600,
+        //     function() use($book) {
+        //         return $book->reviews()->latest()->paginate();
+        //     } 
+        // );
+
+        $book = Book::withAvgRating()->withReviewsCount()->findOrFail($id);
+        $reviews = $book->reviews()->latest()->paginate(10);
+        return view('books.show', [
+            'book' => $book,
+            'reviews' => $reviews
+        ]);
     }
 
     /**
