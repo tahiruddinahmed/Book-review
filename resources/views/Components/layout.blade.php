@@ -65,8 +65,52 @@
 
 </head>
 
-<body class="container mx-auto mt-10 mb-10 max-w-3xl">
-  @yield('content')
+<body class="">
+  <nav class="bg-gray-800 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3 md:flex md:justify-between md:items-center">
+            
+            <!-- Logo and Mobile Menu Button Container -->
+            <div class="flex justify-between items-center">
+                <a href="/" class="text-2xl font-bold text-gray-100 hover:text-gray-300 rounded-md">
+                    Book Review
+                </a>
+                
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-button" type="button" class="text-gray-100 hover:text-gray-300 focus:outline-none focus:text-gray-300 md:hidden">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Navigation Links -->
+            <div id="nav-links" class="flex-col md:flex md:flex-row md:items-center md:space-x-4 mt-4 md:mt-0 hidden">
+                @guest
+                  <a href="/login" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700">Login</a>
+                  <a href="/register" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700">Register</a>
+                @endguest
+            </div>
+
+        </div>
+    </nav>
+
+
+  <div class="container mx-auto mt-10 mb-10 max-w-3xl">
+    @yield('content')
+  </div>
+
+  
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const navLinks = document.getElementById('nav-links');
+
+            mobileMenuButton.addEventListener('click', () => {
+                // Toggle the 'hidden' class to show/hide the navigation links
+                navLinks.classList.toggle('hidden');
+            });
+        });
+    </script>
 </body>
 
 </html>

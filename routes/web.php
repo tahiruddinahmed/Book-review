@@ -2,12 +2,17 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\UserSessionController;
 
 Route::get('/', function () {
     return redirect()->route('books.index');
 });
 
+Route::get('/register', [RegisteredUserController::class, 'create']);
+
+Route::get('/login', [UserSessionController::class, 'create']);
 
 Route::resource('books', BookController::class)->only(['index', 'show']);
 
