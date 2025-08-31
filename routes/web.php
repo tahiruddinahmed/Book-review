@@ -11,7 +11,8 @@ Route::get('/', function () {
 });
 
 Route::get('/register', [RegisteredUserController::class, 'create']);
-
+Route::post('/register', [RegisteredUserController::class, 'store']);
+Route::post('/logout', [UserSessionController::class, 'destroy'])->name('logout');
 Route::get('/login', [UserSessionController::class, 'create']);
 
 Route::resource('books', BookController::class)->only(['index', 'show']);

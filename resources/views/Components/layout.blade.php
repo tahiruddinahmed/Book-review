@@ -71,7 +71,7 @@
             
             <!-- Logo and Mobile Menu Button Container -->
             <div class="flex justify-between items-center">
-                <a href="/" class="text-2xl font-bold text-gray-100 hover:text-gray-300 rounded-md">
+                <a href="{{ route('books.index') }}" class="text-2xl font-bold text-gray-100 hover:text-gray-300 rounded-md">
                     Book Review
                 </a>
                 
@@ -88,7 +88,15 @@
                 @guest
                   <a href="/login" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700">Login</a>
                   <a href="/register" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700">Register</a>
-                @endguest
+                  @endguest
+                  
+                @auth  
+                  <p class="text-sm">{{ auth()->user()->name }}</p>
+                  <form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <x-form-button class="bg-gray-800 hover:bg-gray-700">Logout</x-form-button>
+                  </form>
+                @endauth
             </div>
 
         </div>
