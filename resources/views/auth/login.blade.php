@@ -1,6 +1,7 @@
 <x-auth-layout>
  <div class="bg-gray-800 p-8 rounded-lg shadow-md w-full max-w-sm border border-gray-700">
         <h2 class="text-2xl font-bold text-center mb-6 text-white">Login In</h2>
+        <x-form-error name="login"/>
         <form method="POST" action="/login">
             @csrf 
             <div class="mb-4">
