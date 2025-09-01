@@ -7,6 +7,7 @@ use App\Models\Book;
 use App\Models\Review;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Nette\Utils\Random;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,24 +16,47 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Create 10 user 
+        User::factory(10)->create();
 
+        $users = User::all();
         // generate 100 books and each of those have at least 5 reviews, but not more than 30
-        Book::factory(33)->create()->each(function ($book) {
+        Book::factory(33)->create()->each(function ($book) use($users) {
             $numOfReviews = random_int(5, 30);
-
-            Review::factory()->count($numOfReviews)->good()->for($book)->create();
+            
+            
+            // Review::factory()->count($numOfReviews)->good()->for($book)->create(
+            //         ['user_id' => $users->random()->id]
+            // );
+                
+            for($i = 0; $i < $numOfReviews; $i++) {
+                $user = $users->random();
+                Review::factory()->good()->for($book)->create([
+                    'user_id' => $user->id
+                ]);
+            }
         });
 
-        Book::factory(33)->create()->each(function ($book) {
+        Book::factory(33)->create()->each(function ($book) use ($users) {
             $numOfReviews = random_int(5, 30);
 
-            Review::factory()->count($numOfReviews)->average()->for($book)->create();
+            for($i = 0; $i < $numOfReviews; $i++) {
+                $user = $users->random();
+                Review::factory()->average()->for($book)->create([
+                    'user_id' => $user->id
+                ]);
+            }
         });
 
-        Book::factory(34)->create()->each(function ($book) {
+        Book::factory(34)->create()->each(function ($book) use ($users) {
             $numOfReviews = random_int(5, 30);
 
-            Review::factory()->count($numOfReviews)->bad()->for($book)->create();
+            for($i = 0; $i < $numOfReviews; $i++) {
+                $user = $users->random();
+                Review::factory()->average()->for($book)->create([
+                    'user_id' => $user->id
+                ]);
+            }
         });
 
     }
