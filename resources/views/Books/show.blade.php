@@ -24,11 +24,19 @@
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6 border-b pb-4">
             <h2 class="text-2xl font-bold text-gray-800">Reviews</h2>
 
-            <a href="{{ route('books.review.create', ['book' => $book->id]) }}"
-                class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-5 rounded-lg shadow transition duration-200">
-                <i class="fa-solid fa-plus"></i>
-                <span>Add Review</span>
-            </a>
+            @auth
+                <a href="{{ route('books.review.create', ['book' => $book->id]) }}"
+                    class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-5 rounded-lg shadow transition duration-200">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Add Review</span>
+                </a>    
+            @endauth
+            @guest
+                <a href="{{ route('login') }}"
+                    class="inline-flex items-center gap-2 bg-yellow-500 hover:bg-yellow-700 text-white font-medium py-2 px-5 rounded-lg shadow transition duration-200">
+                    <span>Login/Create Account to post Review</span>
+                </a>
+            @endguest
         </div>
 
 

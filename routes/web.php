@@ -14,7 +14,8 @@ Route::get('/', function () {
 Route::middleware('guest')->group(function() {
     Route::get('/register', [RegisteredUserController::class, 'create']);
     Route::post('/register', [RegisteredUserController::class, 'store']);
-    Route::get('/login', [UserSessionController::class, 'create']);
+    Route::get('/login', [UserSessionController::class, 'create'])
+        ->name('login');
     Route::post('/login', [UserSessionController::class, 'store']);
 });
 
@@ -22,9 +23,16 @@ Route::post('/logout', [UserSessionController::class, 'destroy'])
     ->middleware('auth')
     ->name('logout');
 
+    
+// public route
 Route::resource('books', BookController::class)->only(['index', 'show']);
-
 Route::resource('books.review', ReviewController::class)
     ->scoped(['review' => 'book'])
-    ->only(['create', 'store']);
+    ->only('create');
+
+// Protected route
+Route::resource('books.review', ReviewController::class)
+    ->scoped(['review' => 'book'])
+    ->only('store')
+    ->middleware('auth');
 
