@@ -30,7 +30,10 @@ class ReviewController extends Controller
     public function store(ReviewRequest $request, Book $book)
     {   
         $data = $request->validated();
-        $book->reviews()->create($data);
+        $book->reviews()->create([
+            ...$data,
+            'user_id' => $request->user()->id
+        ]);
 
         return redirect()->route('books.show', ['book' => $book])->with('success', 'A review is added to this book');
     }
