@@ -44,13 +44,24 @@
             @forelse ($reviews as $review)
                 <li class="book-item mb-4">
                     <div>
-                        <div class="mb-2 flex items-center justify-between">
-                            <div class="font-semibold">
-
-                                <x-star-rating :rating="$review->rating" />
+                        <div class="mb-2 flex items-top justify-between">
+                            <div class="font-semibold mb-2 flex items-top gap-4">
+                                <div>
+                                    <p class="font-bold">{{ $review->user->name }}</p>
+                                    <x-star-rating :rating="$review->rating" />
+                                </div>
+                                <div class="gap-1.5">
+                                    @if (Gate::allows('review-update', $review))
+                                        <a href="{{ route('books.review.edit', ['book' => $book->id, 'review' => $review->id]) }}" class="bg-blue-600 p-1 rounded-md text-white hover:bg-blue-700 transition duration-300">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                        <a href=""><i class="fa-solid fa-trash"></i></a>
+                                    @endif
+                                </div>
                             </div>
                             <div class="book-review-count">
-                                {{ $review->created_at->format('M j, Y') }}</div>
+                                {{ $review->created_at->format('M j, Y') }}
+                            </div>
                         </div>
                         <p class="text-gray-700">{{ $review->review }}</p>
                     </div>

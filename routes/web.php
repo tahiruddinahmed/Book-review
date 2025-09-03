@@ -29,7 +29,7 @@ Route::resource('books', BookController::class)->only(['index', 'show']);
 
 // Protected route
 Route::resource('books.review', ReviewController::class)
-    ->scoped(['review' => 'book'])
-    ->only(['store', 'create'])
+    ->scoped()
+    ->only(['store', 'create', 'edit', 'update'])
     ->middleware('auth');
 

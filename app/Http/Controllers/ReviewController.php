@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Http\Requests\ReviewRequest;
+use App\Models\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ReviewController extends Controller
 {
@@ -49,9 +51,16 @@ class ReviewController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Book $book, Review $review)
     {
-        //
+        // authorize the user 
+        Gate::authorize('review-update', $review);
+        // return a view 
+
+        return view('Books.Reviews.edit', [
+            'book' => $book,
+            'review' => $review
+        ]);
     }
 
     /**
