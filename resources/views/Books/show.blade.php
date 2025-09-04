@@ -39,7 +39,12 @@
             @endguest
         </div>
 
-
+        {{-- session alert  --}}
+        @if(@session('success'))
+            <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                <span class="font-medium">{{ session('success') }} </span>
+            </div>
+        @endsession
         <ul>
             @forelse ($reviews as $review)
                 <li class="book-item mb-4">
@@ -50,12 +55,25 @@
                                     <p class="font-bold">{{ $review->user->name }}</p>
                                     <x-star-rating :rating="$review->rating" />
                                 </div>
-                                <div class="gap-1.5">
-                                    @if (Gate::allows('review-update', $review))
-                                        <a href="{{ route('books.review.edit', ['book' => $book->id, 'review' => $review->id]) }}" class="bg-blue-600 p-1 rounded-md text-white hover:bg-blue-700 transition duration-300">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                        </a>
-                                        <a href=""><i class="fa-solid fa-trash"></i></a>
+                                <div class="gap-1.5 flex items-top">
+                                    @if (Gate::allows('review-auth', $review))
+                                        <div>
+                                            <a href="{{ route('books.review.edit', ['book' => $book->id, 'review' => $review->id]) }}" class="bg-blue-600 p-1 rounded-md text-white hover:bg-blue-700 transition duration-300 text-sm">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </a>
+                                        </div>
+
+                                        {{-- delete review --}}
+                                        <form action="{{ route('books.review.destroy', [$book, $review]) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button type="submit"
+                                             class="bg-red-600 p-1 rounded-md text-white hover:bg-red-700 transition duration-300 text-xs">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        </form>
+                                        {{-- <a href=""><i class="fa-solid fa-trash"></i></a> --}}
                                     @endif
                                 </div>
                             </div>

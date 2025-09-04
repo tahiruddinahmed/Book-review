@@ -10,13 +10,6 @@ use Illuminate\Support\Facades\Gate;
 
 class ReviewController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -41,20 +34,12 @@ class ReviewController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Book $book, Review $review)
     {
         // authorize the user 
-        Gate::authorize('review-update', $review);
+        Gate::authorize('review-auth', $review);
         // return a view 
 
         return view('Books.Reviews.edit', [
@@ -69,7 +54,7 @@ class ReviewController extends Controller
     public function update(ReviewRequest $request, Book $book, Review $review)
     {
         // Authorize the user 
-        Gate::authorize('review-update', $review);
+        Gate::authorize('review-auth', $review);
 
         // validate form data 
         $data = $request->validated();
@@ -80,14 +65,23 @@ class ReviewController extends Controller
         ]);
 
         // redirect
-        return redirect()->route('books.show', $book); 
+        return redirect()->route('books.show', $book)->with(['success' => 'Review is edited successfully']); 
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Book $book, Review $review)
     {
-        //
+        // authorize the user 
+        Gate::authorize('review-auth', $review);
+
+        // delete the review
+        $review->delete();
+
+
+        // redirect
+        return redirect()->route('books.show', $book)->with(['success' => 'Review is deleted successfully']);
+
     }
 }
