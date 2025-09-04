@@ -66,9 +66,21 @@ class ReviewController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ReviewRequest $request, Book $book, Review $review)
     {
-        //
+        // Authorize the user 
+        Gate::authorize('review-update', $review);
+
+        // validate form data 
+        $data = $request->validated();
+        // update record 
+        $review->update([
+            ...$data,
+            'user_id' => $request->user()->id
+        ]);
+
+        // redirect
+        return redirect()->route('books.show', $book); 
     }
 
     /**
