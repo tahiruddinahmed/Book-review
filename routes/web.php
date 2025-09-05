@@ -28,6 +28,10 @@ Route::post('/logout', [UserSessionController::class, 'destroy'])
 Route::resource('books', BookController::class)->only(['index', 'show']);
 
 // Protected route
+Route::resource('book', BookController::class)
+    ->only(['create', 'store'])
+    ->middleware('auth');
+    
 Route::resource('books.review', ReviewController::class)
     ->scoped()
     ->only(['store', 'create', 'edit', 'update', 'destroy'])

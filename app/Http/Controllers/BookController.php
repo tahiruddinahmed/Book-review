@@ -50,7 +50,7 @@ class BookController extends Controller
      */
     public function create()
     {
-        //
+        dd('it works');
     }
 
     /**

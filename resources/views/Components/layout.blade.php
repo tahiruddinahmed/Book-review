@@ -91,6 +91,7 @@
                   @endguest
                   
                 @auth  
+                  <a href="{{ route('book.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Add Book</a>
                   <p class="text-sm">{{ auth()->user()->name }}</p>
                   <form action="{{ route('logout') }}" method="post">
                     @csrf
