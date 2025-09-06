@@ -50,7 +50,9 @@ class BookController extends Controller
      */
     public function create()
     {
-        dd('it works');
+        // authorize the user 
+
+        return view('books.create');
     }
 
     /**
@@ -58,7 +60,9 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // authorize 
+
+        dd($request->all());
     }
 
     /**
