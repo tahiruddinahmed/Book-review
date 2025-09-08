@@ -7,7 +7,7 @@
         <h1 class="sticky top-0 mb-2 text-2xl">{{ $book->title }}</h1>
 
         <div class="book-info">
-            <div class="book-author mb-4 text-lg font-semibold">by {{ $book->author }}</div>
+            <div class="book-author mb-4 text-lg font-semibold">by <a href="" class="underline">{{ $book->author->name }}</a></div>
             <div class="book-rating flex items-center">
                 <div class="mr-2 text-lg font-medium text-slate-700">
                     {{-- {{ number_format($book->reviews_avg_rating, 1) }} --}}

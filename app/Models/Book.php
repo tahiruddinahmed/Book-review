@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
 class Book extends Model
@@ -22,6 +23,20 @@ class Book extends Model
      */
     public function reviews() {
         return $this->hasMany(Review::class);
+    }
+
+    /**
+     * A book must have a author 
+     */
+    public function author(): BelongsTo {
+        return $this->belongsTo(Author::class);
+    }
+
+    /**
+     * A book must belong to a user 
+     */
+    public function user(): BelongsTo {
+        return $this->belongsTo(User::class);
     }
 
 

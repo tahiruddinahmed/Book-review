@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Author;
 use App\Models\User;
 use App\Models\Book;
 use App\Models\Review;
@@ -18,17 +19,20 @@ class DatabaseSeeder extends Seeder
     {
         // Create 10 user 
         User::factory(10)->create();
+        Author::factory(10)->create();
 
         $users = User::all();
+        $authors = Author::all();
+
         // generate 100 books and each of those have at least 5 reviews, but not more than 30
-        Book::factory(33)->create()->each(function ($book) use($users) {
-            $numOfReviews = random_int(5, 30);
+        
+
+        Book::factory(33)->create([
+            'user_id' => fn() => $users->random()->id,
+            'author_id' => fn() => $authors->random()->id
+        ])->each(function ($book) use($users) {
+            $numOfReviews = random_int(5, 30);            
             
-            
-            // Review::factory()->count($numOfReviews)->good()->for($book)->create(
-            //         ['user_id' => $users->random()->id]
-            // );
-                
             for($i = 0; $i < $numOfReviews; $i++) {
                 $user = $users->random();
                 Review::factory()->good()->for($book)->create([
@@ -37,7 +41,10 @@ class DatabaseSeeder extends Seeder
             }
         });
 
-        Book::factory(33)->create()->each(function ($book) use ($users) {
+        Book::factory(33)->create([
+            'user_id' => fn() => $users->random()->id,
+            'author_id' => fn() => $authors->random()->id
+        ])->each(function ($book) use ($users) {
             $numOfReviews = random_int(5, 30);
 
             for($i = 0; $i < $numOfReviews; $i++) {
@@ -48,7 +55,10 @@ class DatabaseSeeder extends Seeder
             }
         });
 
-        Book::factory(34)->create()->each(function ($book) use ($users) {
+        Book::factory(34)->create([
+            'user_id' => fn() => $users->random()->id,
+            'author_id' => fn() => $authors->random()->id
+        ])->each(function ($book) use ($users) {
             $numOfReviews = random_int(5, 30);
 
             for($i = 0; $i < $numOfReviews; $i++) {
