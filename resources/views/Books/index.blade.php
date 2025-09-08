@@ -5,6 +5,9 @@
 
 @section('content')
     <h1 class="mb-10 text-2xl">Books</h1>
+
+    <x-alert-msg name='success' />
+
     <form action="{{ route('books.index') }}" method="GET" class="mb-4 flex items-center space-x-2">
         <input 
             type="text" 

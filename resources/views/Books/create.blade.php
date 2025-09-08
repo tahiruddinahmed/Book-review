@@ -4,12 +4,12 @@
 
 @section('content')
 <div class="max-w-xl mx-auto bg-white p-6 rounded-lg shadow-md mt-10">
-    <h2 class="text-2xl font-bold text-gray-800 mb-6">Leave a Review</h2>
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">Add Book</h2>
 
     <form class="space-y-5" method="POST" action="{{ route('book.store') }}">
         @csrf
 
-        <!-- Rating Field -->
+        <!-- title Field -->
         <div>
             <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Title</label>
             <input type="text" name="title" id="title" placeholder="enter book title..."
@@ -20,7 +20,7 @@
             <x-form-error name="title" />
         </div>
 
-        <!-- Review Field -->
+        <!-- author Field -->
         <div>
             <label for="author" class="block text-sm font-medium text-gray-700 mb-1">Author</label>
             <input type="text" name="author" id="author" placeholder="enter book author..."

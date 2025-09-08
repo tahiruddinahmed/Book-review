@@ -40,11 +40,7 @@
         </div>
 
         {{-- session alert  --}}
-        @if(@session('success'))
-            <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
-                <span class="font-medium">{{ session('success') }} </span>
-            </div>
-        @endsession
+        <x-alert-msg name='success' />
         <ul>
             @forelse ($reviews as $review)
                 <li class="book-item mb-4">

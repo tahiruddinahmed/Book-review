@@ -11,6 +11,7 @@ class Book extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['title', 'author'];
     /**
      * Get all reviews for this book.
      *
