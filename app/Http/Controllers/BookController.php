@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Author;
 use App\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -51,8 +52,10 @@ class BookController extends Controller
     public function create()
     {
         // authorize the user 
+        // pass all the authors 
+        $authors = Author::all();
 
-        return view('books.create');
+        return view('books.create', ['authors' => $authors]);
     }
 
     /**
@@ -63,10 +66,13 @@ class BookController extends Controller
         // authorize 
         $data = $request->validate([
             'title' => 'required',
-            'author' => 'required'
+            'author_id' => 'required'
         ]);
 
-        Book::create($data);
+        Book::create([
+            ...$data,
+            'user_id' => $request->user()->id
+        ]);
 
         return redirect()->route('books.index')->with('success', 'New book is added.');
     }

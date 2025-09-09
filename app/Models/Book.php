@@ -12,7 +12,7 @@ class Book extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'author'];
+    protected $fillable = ['title', 'author_id', 'user_id'];
     /**
      * Get all reviews for this book.
      *
