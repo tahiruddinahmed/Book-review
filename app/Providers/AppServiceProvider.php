@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Book;
 use App\Models\Review;
 use App\Models\User;
+use App\Policies\BookPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,5 +27,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('review-auth', function(User $user, Review $review) {    
             return $user->id === $review->user_id;
         });
+
+        Gate::policy(Book::class, BookPolicy::class);
     }
 }

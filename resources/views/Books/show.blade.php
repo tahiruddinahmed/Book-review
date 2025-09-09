@@ -7,15 +7,40 @@
         <h1 class="sticky top-0 mb-2 text-2xl">{{ $book->title }}</h1>
 
         <div class="book-info">
-            <div class="book-author mb-4 text-lg font-semibold">by <a href="" class="underline">{{ $book->author->name }}</a></div>
-            <div class="book-rating flex items-center">
-                <div class="mr-2 text-lg font-medium text-slate-700">
-                    {{-- {{ number_format($book->reviews_avg_rating, 1) }} --}}
-                    <x-star-rating :rating="$book->reviews_avg_rating" />
+            <div class="flex justify-between items-start">
+                <div>
+                    <div class="book-author mb-4 text-lg font-semibold">by <a href=""
+                            class="underline">{{ $book->author->name }}</a></div>
+                    <div class="book-rating flex items-center">
+                        <div class="mr-2 text-lg font-medium text-slate-700">
+                            {{-- {{ number_format($book->reviews_avg_rating, 1) }} --}}
+                            <x-star-rating :rating="$book->reviews_avg_rating" />
+                        </div>
+                        <span class="book-review-count text-sm mt-1 text-gray-500">
+                            {{ $book->reviews_count }} {{ Str::plural('review', 5) }}
+                        </span>
+                    </div>
                 </div>
-                <span class="book-review-count text-sm mt-1 text-gray-500">
-                    {{ $book->reviews_count }} {{ Str::plural('review', 5) }}
-                </span>
+
+                <div class="flex gap-1.5 items-center">
+                    <div>
+                        <a href="{{ route('book.edit', $book) }}"
+                            class="bg-blue-600 py-2 px-3 rounded-md text-white hover:bg-blue-700 transition duration-300 text-sm">
+                            Edit
+                        </a>
+                    </div>
+
+                    {{-- delete review --}}
+                    <form action="" method="POST">
+                        @csrf
+
+                        <button type="submit"
+                            class="bg-red-600 py-2 px-3 rounded-md text-white hover:bg-red-700 transition duration-300 text-xs">
+                            {{-- <i class="fa-solid fa-trash"></i> --}}
+                            Delete
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -29,7 +54,7 @@
                     class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-5 rounded-lg shadow transition duration-200">
                     <i class="fa-solid fa-plus"></i>
                     <span>Add Review</span>
-                </a>    
+                </a>
             @endauth
             @guest
                 <a href="{{ route('login') }}"
@@ -54,7 +79,8 @@
                                 <div class="gap-1.5 flex items-top">
                                     @if (Gate::allows('review-auth', $review))
                                         <div>
-                                            <a href="{{ route('books.review.edit', ['book' => $book->id, 'review' => $review->id]) }}" class="bg-blue-600 p-1 rounded-md text-white hover:bg-blue-700 transition duration-300 text-sm">
+                                            <a href="{{ route('books.review.edit', ['book' => $book->id, 'review' => $review->id]) }}"
+                                                class="bg-blue-600 p-1 rounded-md text-white hover:bg-blue-700 transition duration-300 text-sm">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
                                         </div>
@@ -65,7 +91,7 @@
                                             @method('DELETE')
 
                                             <button type="submit"
-                                             class="bg-red-600 p-1 rounded-md text-white hover:bg-red-700 transition duration-300 text-xs">
+                                                class="bg-red-600 p-1 rounded-md text-white hover:bg-red-700 transition duration-300 text-xs">
                                                 <i class="fa-solid fa-trash"></i>
                                             </button>
                                         </form>

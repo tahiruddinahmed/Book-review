@@ -6,6 +6,7 @@ use App\Models\Author;
 use App\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Gate;
 
 class BookController extends Controller
 {
@@ -112,17 +113,33 @@ class BookController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Book $book)
     {
-        //
+        return view('books.edit', [
+            'book' => $book->load('author'),
+            'authors' => Author::all()
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Book $book)
     {
-        //
+        // authorize
+        Gate::authorize('update', $book);
+
+        $data = $request->validate([
+            'title' => 'required',
+            'author_id' => 'required'
+        ]);
+
+        $book->update([
+            ...$data,
+            'user_id' => $request->user()->id
+        ]);
+
+        return redirect()->route('books.index')->with('success', 'Book is Updated.');
     }
 
     /**
