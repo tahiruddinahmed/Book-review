@@ -22,7 +22,7 @@
                     </div>
                 </div>
 
-                @if (auth()->user()->id === $book->user_id)                
+                @can('update', $book)         
                 <div class="flex gap-1.5 items-center">
                     <div>
                         <a href="{{ route('book.edit', $book) }}"
@@ -43,7 +43,7 @@
                         </button>
                     </form>
                 </div>
-                @endif
+                @endcan
             </div>
         </div>
     </div>
@@ -80,7 +80,7 @@
                                     <x-star-rating :rating="$review->rating" />
                                 </div>
                                 <div class="gap-1.5 flex items-top">
-                                    @if (Gate::allows('review-auth', $review))
+                                    @can('review-auth', $review)
                                         <div>
                                             <a href="{{ route('books.review.edit', ['book' => $book->id, 'review' => $review->id]) }}"
                                                 class="bg-blue-600 p-1 rounded-md text-white hover:bg-blue-700 transition duration-300 text-sm">
@@ -99,7 +99,7 @@
                                             </button>
                                         </form>
                                         {{-- <a href=""><i class="fa-solid fa-trash"></i></a> --}}
-                                    @endif
+                                    @endcan
                                 </div>
                             </div>
                             <div class="book-review-count">
