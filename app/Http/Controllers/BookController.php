@@ -145,8 +145,12 @@ class BookController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Book $book)
     {
-        //
+        Gate::authorize('delete', $book);
+
+        $book->delete();
+
+        return redirect()->route('books.index')->with(['success' => 'One book is deleted!']);
     }
 }

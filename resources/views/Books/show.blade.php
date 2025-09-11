@@ -22,6 +22,7 @@
                     </div>
                 </div>
 
+                @if (auth()->user()->id === $book->user_id)                
                 <div class="flex gap-1.5 items-center">
                     <div>
                         <a href="{{ route('book.edit', $book) }}"
@@ -31,8 +32,9 @@
                     </div>
 
                     {{-- delete review --}}
-                    <form action="" method="POST">
+                    <form action="{{ route('book.destroy', $book) }}" method="POST">
                         @csrf
+                        @method('DELETE')
 
                         <button type="submit"
                             class="bg-red-600 py-2 px-3 rounded-md text-white hover:bg-red-700 transition duration-300 text-xs">
@@ -41,6 +43,7 @@
                         </button>
                     </form>
                 </div>
+                @endif
             </div>
         </div>
     </div>
