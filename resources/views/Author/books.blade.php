@@ -7,7 +7,7 @@
     <h1 class="mb-10 text-2xl font-bold">{{ $author->name }}</h1>
 
     <ul>
-        @forelse ($author->books as $book)
+        @forelse ($books as $book)
             <li class="mb-4">
                 <div class="book-item">
                     <div class="flex flex-wrap items-center justify-between">
