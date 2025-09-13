@@ -4,8 +4,8 @@
 
 
 @section('content')
-    <h1 class="mb-10 text-2xl font-bold">{{ $author->name }}</h1>
-
+    <h1 class="text-2xl font-bold">{{ $author->name }}</h1>
+    <p class="mb-10">Number of Books: {{ $books->total() }}</p>
     <ul>
         @forelse ($books as $book)
             <li class="mb-4">
@@ -36,9 +36,9 @@
         @endforelse
     </ul>
 
-    {{-- @if($books->count())
+    @if($books->count())
         <nav>
             {{ $books->links() }}
         </nav>
-    @endif --}}
+    @endif
 @endsection

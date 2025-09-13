@@ -12,13 +12,18 @@ class AuthorController extends Controller
     public function index(Author $author) {
 
         // load the withAvgRating() and withReviewsCount from Book model 
-        $author->load(['books' => function ($query) {
-            return $query->latest()->withAvgRating()->withReviewsCount();
-        }]);
+        // $author->load(['books' => function ($query) {
+        //     return $query->latest()->withAvgRating()->withReviewsCount()->paginate(10);
+        // }]);
+        $books = $author->books()
+            ->latest()
+            ->withAvgRating()
+            ->withReviewsCount()
+            ->paginate(10);
 
         return view('Author.books', [
             'author' => $author,
-            'books' => $author->books
+            'books' => $books
         ]);
     }
 
