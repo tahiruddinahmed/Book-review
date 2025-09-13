@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthorController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\RegisteredUserController;
@@ -26,6 +27,9 @@ Route::post('/logout', [UserSessionController::class, 'destroy'])
     
 // public route
 Route::resource('books', BookController::class)->only(['index', 'show']);
+
+Route::get('/books/author/{author}', [AuthorController::class, 'index'])
+        ->name('books.author');
 
 // Protected route
 Route::resource('book', BookController::class)
