@@ -53,11 +53,13 @@
             <h2 class="text-2xl font-bold text-gray-800">Reviews</h2>
 
             @auth
+             @can('review-create', $book)
                 <a href="{{ route('books.review.create', ['book' => $book->id]) }}"
                     class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-5 rounded-lg shadow transition duration-200">
                     <i class="fa-solid fa-plus"></i>
                     <span>Add Review</span>
                 </a>
+             @endcan
             @endauth
             @guest
                 <a href="{{ route('login') }}"

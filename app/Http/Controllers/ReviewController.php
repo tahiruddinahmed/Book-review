@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Http\Requests\ReviewRequest;
 use App\Models\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class ReviewController extends Controller
@@ -16,6 +17,8 @@ class ReviewController extends Controller
      */
     public function create(Book $book)
     {
+        Gate::authorize('review-create', $book);
+
         return view('Books.Reviews.create', ['book' => $book]);
     }
 
@@ -30,7 +33,7 @@ class ReviewController extends Controller
             'user_id' => $request->user()->id
         ]);
 
-        return redirect()->route('books.show', ['book' => $book])->with('success', 'A review is added to this book');
+        return redirect()->route('books.show', ['book' => $book])->with('success', 'Thank you, we appreciate for your feedback!');
     }
 
     /**
