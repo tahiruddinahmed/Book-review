@@ -27,6 +27,8 @@ class ReviewController extends Controller
      */
     public function store(ReviewRequest $request, Book $book)
     {   
+        Gate::authorize('review-create', $book);
+        
         $data = $request->validated();
         $book->reviews()->create([
             ...$data,

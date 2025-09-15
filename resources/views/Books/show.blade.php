@@ -9,7 +9,7 @@
         <div class="book-info">
             <div class="flex justify-between items-start">
                 <div>
-                    <div class="book-author mb-4 text-lg font-semibold">by <a href=""
+                    <div class="book-author mb-4 text-lg font-semibold">by <a href="{{ route('books.author', $book->author) }}"
                             class="underline">{{ $book->author->name }}</a></div>
                     <div class="book-rating flex items-center">
                         <div class="mr-2 text-lg font-medium text-slate-700">
